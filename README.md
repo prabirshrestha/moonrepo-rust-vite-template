@@ -15,3 +15,7 @@ git commit -m "Initial commit"
 ```
 
 Going forward we will call `moonrepo-rust-vite-template` as `ROOT` folder.
+
+## Install moon cli
+
+Refer to the official instructions at https://moonrepo.dev/docs/install.
