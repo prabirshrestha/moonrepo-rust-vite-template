@@ -2,3 +2,6 @@
 # moon
 .moon/cache
 .moon/docker
+
+# rust
+/target/

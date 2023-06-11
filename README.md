@@ -30,9 +30,11 @@ moon init
 
 ## Enable Rust Toolchain
 
-Install [rustup](https://rustup.rs/).
+### Install [rustup](https://rustup.rs/).
 
-Modify `.moon/toolchain.yml` to support rust.
+Rustup is required by moon.
+
+### Modify `.moon/toolchain.yml` to support rust.
 
 ```yaml
 # Configures Rust within the toolchain.
@@ -50,3 +52,12 @@ rust:
 ```
 
 Run `moon setup` to install the tools.
+
+### Edit .gitignore for rust
+
+Edit `.gitignore` to exclude rust output from git.
+
+```gitignore
+# rust
+/target/
+```
