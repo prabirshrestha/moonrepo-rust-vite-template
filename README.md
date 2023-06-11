@@ -82,3 +82,11 @@ repository = "https://github.com/prabirshrestha/moonrepo-rust-vite-template"
 readme = "./README.md"
 license = "MIT OR Apache-2.0"
 ```
+
+### Create the first crate
+
+```bash
+cargo new --vcs=none crates/cli
+```
+
+Verify build works by running `cargo build` from root. This should generate the initial `Cargo.lock` in the root.
