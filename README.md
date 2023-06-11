@@ -61,3 +61,24 @@ Edit `.gitignore` to exclude rust output from git.
 # rust
 /target/
 ```
+
+### Configure Cargo.toml for workspace
+
+Create `Cargo.toml` in the root for `crates/*` folder.
+
+```toml
+[workspace]
+resolver = "2"
+members = [ "crates/*" ]
+
+[workspace.package]
+version = "0.1.0"
+authors = ["Prabir Shrestha <mail@prabir.me>"]
+edition = "2021"
+description = """
+moonrepo rust vite project
+"""
+repository = "https://github.com/prabirshrestha/moonrepo-rust-vite-template"
+readme = "./README.md"
+license = "MIT OR Apache-2.0"
+```
