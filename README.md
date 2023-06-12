@@ -207,3 +207,14 @@ Run `moon setup` to download and install the toolchains.
 ```bash
 pnpm init
 ```
+
+### Initial pnpm workspace
+
+Create a `pnpm-workspace.yaml` file in the root.
+
+```yaml
+packages:
+  - apps/*
+  - packages/*
+
+```
