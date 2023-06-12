@@ -273,3 +273,9 @@ Create `tsconfig.options.json` in root based of `apps/client/tsconfig.json`.
 ```
 
 Update `app/client/tsconfig.json` to reference the root tsconfig.
+
+### Install node_modules and initialize pnpm-lock.yaml
+
+```bash
+pnpm install
+```
