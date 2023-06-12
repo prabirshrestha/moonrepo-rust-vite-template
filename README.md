@@ -225,3 +225,16 @@ Update `node_modules/` to `.gitignore`
 # node
 node_modules/
 ```
+
+### Initialize client app
+
+Initialize client.
+
+```bash
+pnpm create vite apps/client
+```
+
+Package name: ...
+Framework: React
+Variant: TypeScript + SWC
+
