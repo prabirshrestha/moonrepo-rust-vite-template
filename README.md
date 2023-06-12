@@ -238,3 +238,7 @@ Package name: ...
 Framework: React
 Variant: TypeScript + SWC
 
+### Update package name for client app
+
+Update `name` in `apps/client/package.json` to `@moonrepo-rust-vite-template/client`.
+
