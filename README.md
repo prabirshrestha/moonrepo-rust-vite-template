@@ -199,3 +199,9 @@ typescript:
 ```
 
 Run `moon setup` to download and install the toolchains.
+
+### Initialize pnpm
+
+```bash
+pnpm init
+```
