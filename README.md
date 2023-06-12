@@ -279,3 +279,12 @@ Update `app/client/tsconfig.json` to reference the root tsconfig.
 ```bash
 pnpm install
 ```
+
+### Run vite app directly without moon to verify
+
+```bash
+cd apps/client
+pnpm dev
+```
+
+Open [http://localhost:5173/](http://localhost:5173/).
