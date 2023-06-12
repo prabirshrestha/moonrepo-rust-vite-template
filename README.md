@@ -334,3 +334,13 @@ tasks:
     inputs:
       - '@group(vite)'
 ```
+
+### Update moon workspace to include vite app
+
+```yaml
+projects:
+  - '.'
+  - 'apps/*'
+```
+
+Verify using `moon run client:dev`.
