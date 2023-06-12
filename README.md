@@ -216,3 +216,12 @@ packages:
   - packages/*
 
 ```
+
+### Add node_modules to gitignore
+
+Update `node_modules/` to `.gitignore`
+
+```gitignore
+# node
+node_modules/
+```
