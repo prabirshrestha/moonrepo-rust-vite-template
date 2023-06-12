@@ -288,3 +288,49 @@ pnpm dev
 ```
 
 Open [http://localhost:5173/](http://localhost:5173/).
+
+### Initialize moon for vite client app.
+
+Create `apps/client/moon.yml`. `moon.yml` needs to be per project.
+
+```yaml
+fileGroups:
+  vite:
+    - 'src/**/*'
+    - 'index.html'
+    - 'vite.config.*'
+    - 'tsconfig.json'
+    - '/tsconfig.options.json'
+    - 'eslintrc.*'
+
+tasks:
+  # Development server
+  dev:
+    command: 'pnpm dev'
+    local: true
+    options:
+      persistent: true
+
+  # Production build
+  build:
+    command: 'pnpm build'
+    inputs:
+      - '@group(vite)'
+    outputs:
+      - 'dist'
+
+  # Preview production build locally
+  preview:
+    command: 'pnpm preview'
+    deps:
+      - '~:build'
+    local: true
+    options:
+      persistent: true
+
+  # Lint
+  lint:
+    command: 'pnpm lint'
+    inputs:
+      - '@group(vite)'
+```

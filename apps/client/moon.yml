@@ -1,0 +1,39 @@
+fileGroups:
+  vite:
+  - 'src/**/*'
+  - 'index.html'
+  - 'vite.config.*'
+  - 'tsconfig.json'
+  - '/tsconfig.options.json'
+  - 'eslintrc.*'
+
+tasks:
+  # Development server
+  dev:
+    command: 'pnpm dev'
+    local: true
+    options:
+      persistent: true
+
+  # Production build
+  build:
+    command: 'pnpm build'
+    inputs:
+      - '@group(vite)'
+    outputs:
+      - 'dist'
+
+  # Preview production build locally
+  preview:
+    command: 'pnpm preview'
+    deps:
+      - '~:build'
+    local: true
+    options:
+      persistent: true
+
+  # Lint
+  lint:
+    command: 'pnpm lint'
+    inputs:
+      - '@group(vite)'

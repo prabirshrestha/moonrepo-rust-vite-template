@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "packageManager": "pnpm@8.6.2",
+  "engines": {
+    "node": "18.16.0"
+  }
 }
