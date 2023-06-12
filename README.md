@@ -157,7 +157,7 @@ projects:
 
 ### Verify moon for rust
 
-```
+```bash
 moon run :build
 moon run :dev
 moon run :check
@@ -166,3 +166,38 @@ moon run :lint
 moon run :test
 moon ci
 ```
+
+## Initialize client
+
+### Configure nodejs and pnpm via moon toolchain
+
+Edit `.moon/workspace.yml` to include nodejs and pnpm toolchain.
+
+```yaml
+# Configures Node.js within the toolchain. moon manages its own version of Node.js
+# instead of relying on a version found on the host machine. This ensures deterministic
+# and reproducible builds across any machine.
+node:
+  # The version to use. Must be a semantic version that includes major, minor, and patch.
+  # We suggest using the latest active LTS version: https://nodejs.org/en/about/releases
+  version: '18.16.0'
+
+  # The package manager to use when managing dependencies.
+  # Accepts "npm" (default), "pnpm", or "yarn".
+  packageManager: 'pnpm'
+
+  # The version of the package manager (above) to use.
+  pnpm:
+    version: '8.6.2'
+
+  # Version format to use when syncing dependencies within the project's `package.json`.
+  dependencyVersionFormat: 'workspace'
+
+# Configures how moon integrates with TypeScript.
+typescript:
+  # Update a project's `tsconfig.json` to route the `outDir` compiler option
+  # to moon's `.moon/cache` directory.
+  routeOutDirToCache: true
+```
+
+Run `moon setup` to download and install the toolchains.
