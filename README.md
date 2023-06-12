@@ -344,3 +344,15 @@ projects:
 ```
 
 Verify using `moon run client:dev`.
+
+### Configure vite to ignore clearning screen
+
+Update `apps/vite.config.ts` script to ignore clearing screen so we can see both server and client logs.
+
+```typescript
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  clearScreen: false,
+});
+```
