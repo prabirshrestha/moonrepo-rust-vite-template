@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+      branches:
+      - main
+  push:
+    branches:
+      - main
+      - ci/*
+    tags:
+      - 'v0.[0-9]+.[0-9]+'
+      - 'v0.[0-9]+.[0-9]+-beta.[0-9]+'
+      - 'v0.[0-9]+.[0-9]+-alpha.[0-9]+'
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        build: [linux]
+        include:
+          - build: linux
+            os: ubuntu-latest
+            node-version: 18.x
+            target: x86_64-unknown-linux-gnu
+            rust-channel: stable
+            usecross: false
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: moonrepo/setup-proto@v0
+      - uses: moonrepo/setup-moon-action@v1
+      # Since gitea actions doesn't support hashFiles function manually generate hash file for now.
+      - name: Get pnpm hash
+        id: pnpm-lock-hash
+        uses: KEINOS/gh-action-hash-for-cache@v1
+        with:
+          path: |
+            pnpm-lock.yaml
+            .moon/toolchain.yml            
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: .pnpm-store
+          key: ${{ runner.os }}-pnpm-store-${{ steps.pnpm-lock-hash.outputs.hash }}
+          restore-keys: |
+            ${{ runner.os }}-            
+      - name: Get Cargo.lock hash
+        id: cargo-lock-hash
+        uses: KEINOS/gh-action-hash-for-cache@v1
+        with:
+          path: |
+            Cargo.lock
+            .moon/toolchain.yml            
+      - name: moon cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            .moon/cache            
+            ~/.cargo/bin            
+          key: ${{ runner.os }}-moon-${{ steps.cargo-lock-hash.outputs.hash }}-${{ steps.pnpm-lock-hash.outputs.hash }}
+      - uses: moonrepo/setup-rust@v0
+        with:
+          channel: ${{ matrix.rust-channel }}
+      - run: moon setup
+      - run: moon ci --color
