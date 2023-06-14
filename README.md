@@ -473,3 +473,31 @@ tasks:
     deps:
       - client:build
 ```
+
+### Configure preview to run release build of client and server
+
+Update moon.yml to build release mode for client and embed in server and run via `moon run preview`.
+
+```yaml
+fileGroups:
+  client-dist:
+    - 'apps/client/dist/**/*'
+
+tasks:
+  preview:
+    command: noop
+    deps:
+      - ~:server-preview
+    local: true
+    options:
+      persistent: true
+  server-preview:
+    command: 'cargo run --release'
+    inputs:
+      - '@globs(sources)'
+    deps:
+      - client:build
+    local: true
+    options:
+      persistent: true
+```

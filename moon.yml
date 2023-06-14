@@ -9,6 +9,8 @@ fileGroups:
     - 'crates/*/src/**/*'
     - 'crates/*/Cargo.toml'
     - 'Cargo.toml'
+  client-dist:
+    - 'apps/client/dist/**/*'
   tests:
     - 'crates/*/benches/**/*'
     - 'crates/*/tests/**/*'
@@ -27,6 +29,13 @@ tasks:
     deps:
       - client:build
       - ~:server-build
+  preview:
+    command: noop
+    deps:
+      - ~:server-preview
+    local: true
+    options:
+      persistent: true
   server-dev:
     command: systemfd --no-pid -s http::8080 -- watchexec -r -w crates cargo run --package cli
     # command: systemfd --no-pid -s http::8080 -- cargo watch -x run --package cli
@@ -41,6 +50,16 @@ tasks:
       - '@globs(sources)'
     deps:
       - client:build
+  server-preview:
+    command: 'cargo run --release'
+    inputs:
+      - '@globs(sources)'
+      - '@globs(client-dist)'
+    deps:
+      - client:build
+    local: true
+    options:
+      persistent: true
   server-check:
     command: 'cargo check --workspace'
     inputs:
