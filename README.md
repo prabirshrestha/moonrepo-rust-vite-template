@@ -430,3 +430,27 @@ fn with_spa_router(router: Router) -> Router {
     )
 }
 ```
+
+### Configure dev server via moon
+
+Update moon.yml to run both client and server via `moon run dev`.
+
+```yaml
+tasks:
+  dev:
+    command: noop
+    deps:
+      - client:dev
+      - ~:server-dev
+    local: true
+    options:
+      persistent: true
+  server-dev:
+    command: systemfd --no-pid -s http::8080 -- watchexec -r -w crates cargo run --package cli
+    # command: systemfd --no-pid -s http::8080 -- cargo watch -x run --package cli
+    inputs:
+      - '@globs(sources)'
+    local: true
+    options:
+      persistent: true
+```

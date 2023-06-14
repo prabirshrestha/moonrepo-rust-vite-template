@@ -14,11 +14,22 @@ fileGroups:
     - 'crates/*/tests/**/*'
 
 tasks:
+  dev:
+    command: noop
+    deps:
+      - client:dev
+      - ~:server-dev
+    local: true
+    options:
+      persistent: true
   server-dev:
-    command: 'cargo run --package cli'
+    command: systemfd --no-pid -s http::8080 -- watchexec -r -w crates cargo run --package cli
+    # command: systemfd --no-pid -s http::8080 -- cargo watch -x run --package cli
     inputs:
       - '@globs(sources)'
     local: true
+    options:
+      persistent: true
   server-build:
     command: 'cargo build --release'
     inputs:
