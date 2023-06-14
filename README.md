@@ -454,3 +454,22 @@ tasks:
     options:
       persistent: true
 ```
+
+### Configure release build for client and server via moon
+
+Update moon.yml to build both client and server via `moon run build`.
+
+```yaml
+tasks:
+  build:
+    command: noop
+    deps:
+      - client:build
+      - ~:server-build
+  server-build:
+    command: 'cargo build --release'
+    inputs:
+      - '@globs(sources)'
+    deps:
+      - client:build
+```
