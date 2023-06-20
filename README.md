@@ -476,7 +476,7 @@ tasks:
 
 ### Configure preview to run release build of client and server
 
-Update moon.yml to build release mode for client and embed in server and run via `moon run preview`.
+Update `moon.yml` to build release mode for client and embed in server and run via `moon run preview`.
 
 ```yaml
 fileGroups:
