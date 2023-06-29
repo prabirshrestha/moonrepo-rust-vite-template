@@ -28,7 +28,7 @@ node:
 
   # The version of the package manager (above) to use.
   pnpm:
-    version: '8.6.2'
+    version: '8.6.5'
 
   # Version format to use when syncing dependencies within the project's `package.json`.
   dependencyVersionFormat: 'workspace'
