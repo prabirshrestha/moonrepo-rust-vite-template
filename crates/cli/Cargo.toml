@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.71"
 listenfd = "1.0.1"
-rust-embed = "6.8.0"
+rust-embed = "6.8.1"
 salvo = { version = "0.44.1", features = ["compression", "caching-headers", "proxy", "serve-static"] }
 tokio = { version = "1.29.1", features = ["macros"] }
 tracing = "0.1.37"
