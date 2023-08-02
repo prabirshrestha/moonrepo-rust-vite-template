@@ -63,7 +63,7 @@ jobs:
             .moon/cache            
             ~/.cargo/bin            
           key: ${{ runner.os }}-moon-${{ steps.cargo-lock-hash.outputs.hash }}-${{ steps.pnpm-lock-hash.outputs.hash }}
-      - uses: moonrepo/setup-rust@v0
+      - uses: moonrepo/setup-rust@v1
         with:
           channel: ${{ matrix.rust-channel }}
       - run: moon setup
