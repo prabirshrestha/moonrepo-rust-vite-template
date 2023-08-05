@@ -56,13 +56,13 @@ jobs:
           path: |
             Cargo.lock
             .moon/toolchain.yml            
-      - name: moon cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            .moon/cache            
-            ~/.cargo/bin            
-          key: ${{ runner.os }}-moon-${{ steps.cargo-lock-hash.outputs.hash }}-${{ steps.pnpm-lock-hash.outputs.hash }}
+      # - name: moon cache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       .moon/cache            
+      #       ~/.cargo/bin            
+      #     key: ${{ runner.os }}-moon-${{ steps.cargo-lock-hash.outputs.hash }}-${{ steps.pnpm-lock-hash.outputs.hash }}
       - uses: moonrepo/setup-rust@v1
         with:
           channel: ${{ matrix.rust-channel }}
