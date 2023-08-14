@@ -9,7 +9,7 @@ edition = "2021"
 anyhow = "1.0.71"
 listenfd = "1.0.1"
 rust-embed = "6.8.1"
-salvo = { version = "0.50.3", features = ["compression", "caching-headers", "proxy", "serve-static"] }
+salvo = { version = "0.50.5", features = ["compression", "caching-headers", "proxy", "serve-static"] }
 tokio = { version = "1.30.0", features = ["macros"] }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.17"
