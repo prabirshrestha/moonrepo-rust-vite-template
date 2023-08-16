@@ -10,6 +10,6 @@ anyhow = "1.0.74"
 listenfd = "1.0.1"
 rust-embed = "6.8.1"
 salvo = { version = "0.50.5", features = ["compression", "caching-headers", "proxy", "serve-static"] }
-tokio = { version = "1.31.0", features = ["macros"] }
+tokio = { version = "1.32.0", features = ["macros"] }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.17"
