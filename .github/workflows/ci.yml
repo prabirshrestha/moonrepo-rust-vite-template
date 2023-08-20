@@ -66,5 +66,6 @@ jobs:
       - uses: moonrepo/setup-rust@v1
         with:
           channel: ${{ matrix.rust-channel }}
+      - run: moon --version
       - run: moon setup
-      - run: moon ci --color
+      - run: moon ci --color --log trace
