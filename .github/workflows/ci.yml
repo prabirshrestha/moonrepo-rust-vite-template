@@ -70,7 +70,7 @@ jobs:
       - uses: moonrepo/setup-rust@v1
         with:
           channel: ${{ matrix.rust-channel }}
-          components: clippy, rustfmt
+          components: clippy
       - run: moon --version
       - run: moon setup
       - run: moon ci --color --log trace
