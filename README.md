@@ -48,7 +48,7 @@ rust:
     - watchexec-cli
 
   # Sync the configured version above as a channel to the root `rust-toolchain.toml` config.
-  syncToolchainConfig: false
+  syncToolchainConfig: true
 ```
 
 Run `moon setup` to install the tools.

@@ -12,7 +12,7 @@ rust:
     - watchexec-cli
 
   # Sync the configured version above as a channel to the root `rust-toolchain.toml` config.
-  syncToolchainConfig: false
+  syncToolchainConfig: true
 
 # Configures Node.js within the toolchain. moon manages its own version of Node.js
 # instead of relying on a version found on the host machine. This ensures deterministic
