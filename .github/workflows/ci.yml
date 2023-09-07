@@ -37,7 +37,7 @@ jobs:
           version: 0.16.1
       - uses: moonrepo/setup-moon-action@v1
         with:
-          version: 1.13.1
+          version: 1.13.2
       # Since gitea actions doesn't support hashFiles function manually generate hash file for now.
       - name: Get pnpm hash
         id: pnpm-lock-hash
