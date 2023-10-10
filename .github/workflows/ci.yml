@@ -72,4 +72,4 @@ jobs:
           channel: ${{ matrix.rust-channel }}
       - run: moon --version
       - run: moon setup
-      - run: moon ci --color --log trace
+      - run: moon ci --color # --log trace
