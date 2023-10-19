@@ -11,5 +11,5 @@ listenfd = "1.0.1"
 rust-embed = "6.8.1"
 salvo = { version = "0.57.0", features = ["compression", "caching-headers", "proxy", "serve-static"] }
 tokio = { version = "1.33.0", features = ["macros"] }
-tracing = "0.1.37"
+tracing = "0.1.40"
 tracing-subscriber = "0.3.17"
