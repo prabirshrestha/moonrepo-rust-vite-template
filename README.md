@@ -14,4 +14,5 @@ export PATH="$HOME/.proto/shims:$HOME/.proto/bin:$PATH"
 
 # Install necessary tools
 proto use
+moon run :dev
 ```

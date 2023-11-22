@@ -49,6 +49,6 @@ fn with_spa_router(router: Router) -> Router {
 
     router.push(
         Router::with_path("<**rest>")
-            .handle(salvo::serve_static::static_embed::<Assets>().fallback("index.html")),
+            .hoop(salvo::serve_static::static_embed::<Assets>().fallback("index.html")),
     )
 }
