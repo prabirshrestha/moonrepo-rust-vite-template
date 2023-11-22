@@ -1,4 +1,4 @@
-name: CI
+name: ci
 
 on:
   workflow_dispatch:
@@ -15,61 +15,78 @@ on:
       - 'v0.[0-9]+.[0-9]+-alpha.[0-9]+'
 
 jobs:
-  ci:
-    name: CI
-    runs-on: ${{ matrix.os }}
+  build:
+    name: build
     strategy:
+      fail-fast: true
       matrix:
-        build: [linux]
+        target:
+            - x86_64-unknown-linux-gnu
+            - x86_64-apple-darwin
+            # - x86_64-pc-windows-msvc
         include:
-          - build: linux
+          - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
-            node-version: 18.x
-            target: x86_64-unknown-linux-gnu
-            rust-channel: stable
-            usecross: false
+            name: objstor-x86_64-unknown-linux-gnu.tar.gz
+          - target: x86_64-apple-darwin
+            os: macos-latest
+            name: objstor-x86_64-apple-darwin.tar.gz
+          # - target: x86_64-pc-windows-msvc
+          #   os: windows-latest
+          #   name: objstor-x86_64-pc-windows-msvc.zip
+    runs-on: ${{ matrix.os }}
+    env:
+      # emit backtraces on panics.
+      rust_backtrace: 1
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: moonrepo/setup-proto@v1
+      - uses: moonrepo/setup-rust@v1.0.3
         with:
-          version: 0.18.3
-      - uses: moonrepo/setup-moon-action@v1
+          cache-target: release
+          components: clippy
+      - uses: moonrepo/setup-toolchain@v0.1.1
         with:
-          version: 1.14.0
-      # Since gitea actions doesn't support hashFiles function manually generate hash file for now.
-      - name: Get pnpm hash
-        id: pnpm-lock-hash
-        uses: KEINOS/gh-action-hash-for-cache@v1
+          auto-install: true
+          moon-version: '1.17.2'    # renovate: datasource=github-releases depname=moonrepo/moon extractversion=^v(?<version>.*)$
+          proto-version: '0.23.1'   # renovate: datasource=github-releases depname=moonrepo/proto extractversion=^v(?<version>.*)$
+      - uses: swatinem/rust-cache@v2.7.0
+      - uses: actions/cache@v3
+        name: setup pnpm cache
         with:
-          path: |
-            pnpm-lock.yaml
-            .moon/toolchain.yml            
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
-        with:
-          path: .pnpm-store
-          key: ${{ runner.os }}-pnpm-store-${{ steps.pnpm-lock-hash.outputs.hash }}
+          path: ${{ env.store_path }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashfiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-            
-      - name: Get Cargo.lock hash
-        id: cargo-lock-hash
-        uses: KEINOS/gh-action-hash-for-cache@v1
+            ${{ runner.os }}-pnpm-store-
+
+      - name: apt-get update
+        if: runner.os == 'linux'
+        run : sudo apt-get update
+      - uses: awalsh128/cache-apt-pkgs-action@latest
+        if: runner.os == 'linux'
         with:
-          path: |
-            Cargo.lock
-            .moon/toolchain.yml            
-      # - name: moon cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: |
-      #       .moon/cache            
-      #       ~/.cargo/bin            
-      #     key: ${{ runner.os }}-moon-${{ steps.cargo-lock-hash.outputs.hash }}-${{ steps.pnpm-lock-hash.outputs.hash }}
-      - uses: moonrepo/setup-rust@v1
-        with:
-          channel: ${{ matrix.rust-channel }}
+          packages: libclang-dev
+          version: 1.0
+
       - run: moon --version
-      - run: moon setup
-      - run: moon ci --color # --log trace
+      - run: moon run :lint :build
+
+      - name: prepare unix artifacts
+        if: matrix.os != 'windows-latest'
+        run: |
+          tar czvf ${{ matrix.name }} -C ./target/release objstor
+
+      - name: prepare windows artifacts
+        if: matrix.os == 'windows-latest'
+        run: |
+          cd target/release
+          strip objstor.exe
+          7z a ../../../${{ matrix.name }} objstor.exe
+          cd -
+
+      - name: upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.name }}
+          path: ${{ matrix.name }}

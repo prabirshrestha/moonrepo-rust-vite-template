@@ -38,7 +38,7 @@ async fn main() -> anyhow::Result<()> {
 #[cfg(debug_assertions)]
 fn with_spa_router(router: Router) -> Router {
     router
-        .push(Router::with_path("<**rest>").hoop(salvo::proxy::Proxy::new("http://localhost:5173")))
+        .push(Router::with_path("<**rest>").goal(salvo::proxy::Proxy::new("http://localhost:5173")))
 }
 
 #[cfg(not(debug_assertions))]
@@ -49,6 +49,6 @@ fn with_spa_router(router: Router) -> Router {
 
     router.push(
         Router::with_path("<**rest>")
-            .handle(salvo::serve_static::static_embed::<Assets>().fallback("index.html")),
+            .goal(salvo::serve_static::static_embed::<Assets>().fallback("index.html")),
     )
 }
